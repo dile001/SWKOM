@@ -54,14 +54,14 @@ jobs:
           name: artifact
       #Deploy the artifact (JAR) into AWS Beanstalk
       - name: Deploy to EB
-        uses: einaregilsson/beanstalk-deploy@v13
+        uses: actions/checkout@v3
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_session_token: ${{ secrets.AWS_SESSION_TOKEN }}
           use_existing_version_if_available: true
-          application_name: SWKOM-StojDiki-App
-          environment_name: Swkomstojdikiapp-env-2
+          application_name: SWKOM-WH
+          environment_name: Swkomwh-env
           version_label: ${{github.SHA}}
           region: us-east-1
           deployment_package: openapi-spring-1.22.1.jar

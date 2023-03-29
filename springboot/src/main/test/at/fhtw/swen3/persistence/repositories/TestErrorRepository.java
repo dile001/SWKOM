@@ -17,12 +17,14 @@ public class TestErrorRepository {
 
     @Test
     public void testErrorRepository() {
-        ErrorEntity entity = repository.save(ErrorMapper.INSTANCE.dtoToEntity(new Error().errorMessage("test")));
+
+        ErrorEntity entity = repository.save(ErrorMapper.INSTANCE.dtoToEntity(new Error().errorMessage("TEST")));
 
         Optional<ErrorEntity> optionalErrorEntity = repository.findById(entity.getId());
 
-        assert (optionalErrorEntity.isPresent());
+        assert(optionalErrorEntity.isPresent());
 
         repository.delete(entity);
+
     }
 }

@@ -6,8 +6,8 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-01-16T19:44:04+0100",
-    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17 (Oracle Corporation)"
+    date = "2023-03-28T22:51:20+0200",
+    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 20 (Oracle Corporation)"
 )
 public class WarehouseNextHopsMapperImpl implements WarehouseNextHopsMapper {
 
@@ -20,7 +20,6 @@ public class WarehouseNextHopsMapperImpl implements WarehouseNextHopsMapper {
         WarehouseNextHops warehouseNextHops = new WarehouseNextHops();
 
         warehouseNextHops.setHop( WarehouseNextHopsMapper.hopEntityToHop( entity.getHop() ) );
-        warehouseNextHops.setTraveltimeMins( entity.getTravelTimeMinutes() );
 
         return warehouseNextHops;
     }
@@ -34,7 +33,6 @@ public class WarehouseNextHopsMapperImpl implements WarehouseNextHopsMapper {
         WarehouseNextHopsEntity.WarehouseNextHopsEntityBuilder warehouseNextHopsEntity = WarehouseNextHopsEntity.builder();
 
         warehouseNextHopsEntity.hop( WarehouseNextHopsMapper.hopToHopEntity( o.getHop() ) );
-        warehouseNextHopsEntity.travelTimeMinutes( o.getTraveltimeMins() );
 
         return warehouseNextHopsEntity.build();
     }

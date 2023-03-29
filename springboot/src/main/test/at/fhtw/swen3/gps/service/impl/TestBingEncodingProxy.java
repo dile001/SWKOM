@@ -11,18 +11,44 @@ public class TestBingEncodingProxy {
 
     @Test
     public void testBingEncodingProxy() {
+
         BingEncodingProxy bingEncodingProxy = new BingEncodingProxy();
-        GeoCoordinate geoCoordinate = new GeoCoordinate();
+        GeoCoordinate geoCoordinate = null;
+
         try {
             geoCoordinate = bingEncodingProxy.encodeAddress(Address.builder()
                     .country("Österreich")
                     .city("Wien")
-                    .street("Brigittenauer Lände")
-                    .postalCode("1200")
+                    .street("Längenfeldgasse")
+                    .postalCode("1120")
                     .build());
         } catch (BadAddressException e) {
             e.printStackTrace();
         }
         assertNotNull(geoCoordinate);
     }
+
+    @Test
+    public void testBingEncodingProxyLatLon() {
+
+        BingEncodingProxy bingEncodingProxy = new BingEncodingProxy();
+        GeoCoordinate geoCoordinate = null;
+
+        try {
+            geoCoordinate = bingEncodingProxy.encodeAddress(Address.builder()
+                    .country("Österreich")
+                    .city("Wien")
+                    .street("Längenfeldgasse")
+                    .postalCode("1120")
+                    .build());
+        } catch (BadAddressException e) {
+            e.printStackTrace();
+        }
+
+        assertNotNull(geoCoordinate);
+
+        assertEquals(48.1846892, geoCoordinate.getLat());
+        assertEquals(16.3358539, geoCoordinate.getLon());
+    }
+
 }

@@ -1,6 +1,7 @@
 package at.fhtw.swen3.controller;
 
 import at.fhtw.swen3.controller.rest.WarehouseApi;
+import at.fhtw.swen3.services.NotificationService;
 import at.fhtw.swen3.services.WarehouseService;
 import at.fhtw.swen3.services.dto.Hop;
 import at.fhtw.swen3.services.dto.Warehouse;
@@ -33,10 +34,13 @@ public class WarehouseApiController implements WarehouseApi {
 
     private final WarehouseService warehouseService;
 
+    private final NotificationService notificationService;
+
     @Autowired
-    public WarehouseApiController(NativeWebRequest request, WarehouseService warehouseService) {
+    public WarehouseApiController(NativeWebRequest request, WarehouseService warehouseService, NotificationService notificationService) {
         this.request = request;
         this.warehouseService = warehouseService;
+        this.notificationService = notificationService;
     }
 
     @Override
@@ -52,9 +56,11 @@ public class WarehouseApiController implements WarehouseApi {
                 return new ResponseEntity<>(warehouseService.getWarehouse(code), HttpStatus.OK) ;
             }catch (HopNotFoundException e){
                 logger.error("Hop not found ", e);
+                notificationService.sendEmail("Error at Application","Hop not found");
                 return new ResponseEntity<Hop>(HttpStatus.NOT_FOUND);
             }catch (Exception e){
                 logger.error("Response not serializable", e);
+                notificationService.sendEmail("Error at Application","Response not serializable");
                 return new ResponseEntity<Hop>(HttpStatus.BAD_REQUEST);
             }
         }
@@ -67,6 +73,7 @@ public class WarehouseApiController implements WarehouseApi {
             warehouseService.importWarehouses(warehouse);
         }catch (BadWarehouseException e){
             logger.error("Response not serializable", e);
+            notificationService.sendEmail("Error at Application","Response not serializable");
             return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<Void>(HttpStatus.OK);

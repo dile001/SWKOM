@@ -1,7 +1,7 @@
 package at.fhtw.swen3.controller;
 
-
 import at.fhtw.swen3.controller.rest.ParcelApi;
+import at.fhtw.swen3.services.NotificationService;
 import at.fhtw.swen3.services.ParcelService;
 import at.fhtw.swen3.services.dto.NewParcelInfo;
 import at.fhtw.swen3.services.dto.Parcel;
@@ -41,10 +41,13 @@ public class ParcelApiController implements ParcelApi {
 
     private final ParcelService parcelService;
 
+    private final NotificationService notificationService;
+
     @Autowired
-    public ParcelApiController(NativeWebRequest request, ParcelService parcelService) {
+    public ParcelApiController(NativeWebRequest request, ParcelService parcelService, NotificationService notificationService) {
         this.request = request;
         this.parcelService = parcelService;
+        this.notificationService = notificationService;
     }
 
     @Override
@@ -143,6 +146,7 @@ public class ParcelApiController implements ParcelApi {
     ) {
         try{
             parcelService.reportParcelDelivery(trackingId);
+            notificationService.sendEmail("Parcel Delivery","Parcel successfully delivered.");
             return new ResponseEntity<Void>(HttpStatus.OK);
         }catch (BadTrackingIDException e){
             log.error(e.getMessage());
